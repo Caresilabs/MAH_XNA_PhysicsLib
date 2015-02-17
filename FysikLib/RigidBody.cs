@@ -78,8 +78,19 @@ namespace FysikLib
                 ApplyForce(Forces.GRAVITY, World.GetGravity());
 
 
-            List<Manifold> manifolds = new List<Manifold>();
+            // Update net force
+            if (!IsStatic)
+            {
+                float sumX = forces.Sum(x => x.Value.X) / (float)Mass;
+                float sumY = forces.Sum(x => x.Value.Y) / (float)Mass;
+
+                Velocity += new Vector2(sumX, sumY) * delta;
+
+                Position += Velocity * delta; // fel lennart, RECT MAN!! * 1 / 2f; 
+            }
+
             // Update Collision
+            List<Manifold> manifolds = new List<Manifold>();
             foreach (var fix1 in Fixtures)
             {
                 foreach (var body in World.Bodies)
@@ -101,18 +112,6 @@ namespace FysikLib
             foreach (var item in manifolds)
                 item.ApplyImpulse();
 
-
-            // Update net force
-            if (!IsStatic)
-            {
-                float sumX = forces.Sum(x => x.Value.X) / (float)Mass;
-                float sumY = forces.Sum(x => x.Value.Y) / (float)Mass;
-
-                Velocity += new Vector2(sumX, sumY) * delta;
-
-                //if (Velocity.Length() > .37f)
-                Position += Velocity * delta; // fel lennart, RECT MAN!! * 1 / 2f; 
-            }
 
             foreach (var item in manifolds)
                 item.PositionalCorrection();

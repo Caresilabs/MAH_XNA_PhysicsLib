@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A1_Boll", "Fysik Projekt\Fysik Projekt\A1_Boll.csproj", "{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fysik ProjektContent", "Fysik Projekt\Fysik ProjektContent\Fysik ProjektContent.contentproj", "{7644E7D6-3C45-4E12-A5FB-4935641387E8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FysikLib", "FysikLib\FysikLib.csproj", "{320D0645-6059-4D57-9C8F-9ECF6A3BA3B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C1_Car", "C1_Car\C1_Car\C1_Car.csproj", "{1956762E-E6E1-43E6-AAC9-A00B65FC7EB6}"
@@ -15,18 +11,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B1_Box", "B1_Box\B1_Box\B1_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2_Boll", "A2_Boll\A2_Boll\A2_Boll.csproj", "{CB21E225-EDAF-4B35-8A4B-56274AF6DFE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fysik ProjektContent", "Fysik ProjektContent\Fysik ProjektContent.contentproj", "{7644E7D6-3C45-4E12-A5FB-4935641387E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A1_Boll", "A1_Boll\Fysik Projekt\A1_Boll.csproj", "{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Debug|x86.ActiveCfg = Debug|x86
-		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Debug|x86.Build.0 = Debug|x86
-		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Release|x86.ActiveCfg = Release|x86
-		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Release|x86.Build.0 = Release|x86
-		{7644E7D6-3C45-4E12-A5FB-4935641387E8}.Debug|x86.ActiveCfg = Debug|x86
-		{7644E7D6-3C45-4E12-A5FB-4935641387E8}.Release|x86.ActiveCfg = Release|x86
 		{320D0645-6059-4D57-9C8F-9ECF6A3BA3B5}.Debug|x86.ActiveCfg = Debug|x86
 		{320D0645-6059-4D57-9C8F-9ECF6A3BA3B5}.Debug|x86.Build.0 = Debug|x86
 		{320D0645-6059-4D57-9C8F-9ECF6A3BA3B5}.Release|x86.ActiveCfg = Release|x86
@@ -43,6 +37,12 @@ Global
 		{CB21E225-EDAF-4B35-8A4B-56274AF6DFE8}.Debug|x86.Build.0 = Debug|x86
 		{CB21E225-EDAF-4B35-8A4B-56274AF6DFE8}.Release|x86.ActiveCfg = Release|x86
 		{CB21E225-EDAF-4B35-8A4B-56274AF6DFE8}.Release|x86.Build.0 = Release|x86
+		{7644E7D6-3C45-4E12-A5FB-4935641387E8}.Debug|x86.ActiveCfg = Debug|x86
+		{7644E7D6-3C45-4E12-A5FB-4935641387E8}.Release|x86.ActiveCfg = Release|x86
+		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Debug|x86.ActiveCfg = Debug|x86
+		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Debug|x86.Build.0 = Debug|x86
+		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Release|x86.ActiveCfg = Release|x86
+		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

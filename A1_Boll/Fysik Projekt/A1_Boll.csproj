@@ -98,7 +98,7 @@
       <Project>{320d0645-6059-4d57-9c8f-9ecf6a3ba3b5}</Project>
       <Name>FysikLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fysik ProjektContent\Fysik ProjektContent.contentproj">
+    <ProjectReference Include="..\..\Fysik ProjektContent\Fysik ProjektContent.contentproj">
       <Name>Fysik ProjektContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{7644E7D6-3C45-4E12-A5FB-4935641387E8}</Project>

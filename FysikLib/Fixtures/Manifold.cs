@@ -27,15 +27,12 @@ namespace FysikLib.Fixtures
         private float StaticFriction { get; set; }
 
 
-        void Solve()
-        {
-        }
-
         public void Initialize()
         {
             BodyA = A.Body;
             BodyB = B.Body;
 
+            // COEFFIECIENTS! - Use to approximate mu given friction coefficients of each body
             StaticFriction = (float)Math.Sqrt((BodyA.FrictionStatic * BodyA.FrictionStatic) + (BodyB.FrictionStatic * BodyB.FrictionStatic));
             KineticFriction = (float)Math.Sqrt((BodyA.FrictionKinetic * BodyA.FrictionKinetic) + (BodyB.FrictionKinetic * BodyB.FrictionKinetic));
 
@@ -68,7 +65,6 @@ namespace FysikLib.Fixtures
             BodyB.ApplyImpulse(impulse);
 
 
-
             //  ==== START FRICTION ==== //
             diffVelocity = BodyB.Velocity - BodyA.Velocity; //(BodyB.GetVelocity() + (BodyB.InvMass * impulse)) - (BodyA.GetVelocity() - (BodyA.InvMass * impulse));
 
@@ -84,9 +80,6 @@ namespace FysikLib.Fixtures
             float frictionForce = -Vector2.Dot(diffVelocity, tangent);
             frictionForce = frictionForce / (BodyA.InvMass + BodyB.InvMass); // times with mas to get force
 
-            // COEFFIECIENTS! - Use to approximate mu given friction coefficients of each body
-
-
             // Check if its a static of kinetic friction
             Vector2 frictionImpulse;
             if (Math.Abs(frictionForce) < impulseScalar * StaticFriction) // if max friction is less than normal impulse * static friction
@@ -98,22 +91,18 @@ namespace FysikLib.Fixtures
             else
             {
                 // Kinetic
-                // frictionAcceleration = (impulseScalar * tangent * kineticFriction) / delta;
                 frictionImpulse = -impulseScalar * KineticFriction * tangent;
-                // BodyA.ApplyForce(Forces.FRICTION, frictionAcceleration);
             }
 
             // Apply
             BodyA.ApplyImpulse(-frictionImpulse);
             BodyB.ApplyImpulse(frictionImpulse);
-
-            // Position offset for sinking objects. TIME STEP
         }
 
         public void PositionalCorrection()
         {
-            const float percent = 0.999f; // usually 20% to 80%
-            const float slop = 0.01f; // usually 0.01 to 0.1
+            const float percent = 1f; // usually 20% to 80%
+            const float slop = 0.002f; // usually 0.01 to 0.1
             var correction = (Math.Max(Penetration - slop, 0.0f) / (BodyA.InvMass + BodyB.InvMass)) * percent * Normal;
             correction.X = 0; //TODO NASTY HACK
             BodyA.Position -= BodyA.InvMass * correction;
