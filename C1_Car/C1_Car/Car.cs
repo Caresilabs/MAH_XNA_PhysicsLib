@@ -37,18 +37,19 @@ namespace C1_Car
             body.AddFixture(fixture);
             body.Rotate(90);
             body.UseGravity = false;
+            body.UseCollision = false;
             body.SetVelocity(speed, 0);
             world.AddBody(body);
         }
 
         public void Update(float delta)
         {
-            if (body.GetPosition().X > road.GetCentrum().X)
+            if (body.Position.X > road.GetCentrum().X)
             {
                 turn = true;
                 madeTurn = true;
             }
-            else if (body.GetPosition().X < road.GetCentrum().X && body.GetPosition().Y < road.GetLowerRoadPosition().Y + 1.5f)
+            else if (body.Position.X < road.GetCentrum().X && body.Position.Y < road.GetLowerRoadPosition().Y + 1.5f)
             {
                 turn = false;
                 //Fix update, for roatating to much
@@ -67,7 +68,7 @@ namespace C1_Car
                 if (Math.Abs(world.GetGravity().Y * friction) < forceMagnitude)
                     forceMagnitude = Math.Abs(world.GetGravity().Y * friction) * 0.6f;
 
-                Vector2 VectorTowardsCentrum = new Vector2(road.GetCentrum().X - body.GetPosition().X, road.GetCentrum().Y - body.GetPosition().Y);
+                Vector2 VectorTowardsCentrum = road.GetCentrum() - body.Position;
                 VectorTowardsCentrum.Normalize();
 
                 body.ApplyForce(Forces.FRICTION, VectorTowardsCentrum * forceMagnitude);

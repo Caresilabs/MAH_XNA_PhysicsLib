@@ -18,6 +18,8 @@ namespace FysikLib
     {
         public bool UseGravity { get; set; }
 
+        public bool UseCollision { get; set; }
+
         public bool IsStatic { get; set; }
 
         public float FrictionStatic { get; set; }
@@ -67,6 +69,7 @@ namespace FysikLib
             this.UseGravity = true;
             this.IsStatic = false;
             this.Restitution = 1.5f;
+            this.UseCollision = true;
             this.FrictionKinetic = .35f;
             this.FrictionStatic = .45f;
         }
@@ -91,17 +94,20 @@ namespace FysikLib
 
             // Update Collision
             List<Manifold> manifolds = new List<Manifold>();
-            foreach (var fix1 in Fixtures)
+            if (UseCollision)
             {
-                foreach (var body in World.Bodies)
+                foreach (var fix1 in Fixtures)
                 {
-                    if (body == this) continue; // Dont check itself
-
-                    foreach (var fix2 in body.Fixtures)
+                    foreach (var body in World.Bodies)
                     {
-                        var m = fix1.UpdateCollision(fix2);
-                        if (m != null)
-                            manifolds.AddRange(m);
+                        if (body == this) continue; // Dont check itself
+
+                        foreach (var fix2 in body.Fixtures)
+                        {
+                            var m = fix1.UpdateCollision(fix2);
+                            if (m != null)
+                                manifolds.AddRange(m);
+                        }
                     }
                 }
             }
@@ -176,11 +182,6 @@ namespace FysikLib
         public void SetVelocity(float x, float y)
         {
             Velocity = new Vector2(x, y);
-        }
-
-        public Vector2 GetPosition()
-        {
-            return Position;
         }
     }
 }

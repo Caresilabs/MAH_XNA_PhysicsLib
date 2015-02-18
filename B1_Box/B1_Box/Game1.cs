@@ -86,7 +86,7 @@ namespace B1_Box
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
                 box.Position = new Vector2(2, 0);
-                box.SetVelocity(0, 0);
+                box.SetVelocity(5, 0);
             }
 
 

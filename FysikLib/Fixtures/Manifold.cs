@@ -42,6 +42,8 @@ namespace FysikLib.Fixtures
 
         public void ApplyImpulse()
         {
+            //  ==== START COLLISION IMPULSE ==== //
+
             //relative velocity
             var diffVelocity = BodyB.Velocity - BodyA.Velocity;
 
@@ -53,20 +55,20 @@ namespace FysikLib.Fixtures
                 return;
 
             // Calculate impulse scalar 
-            float impulseScalar = -(1 + RestitutionMix) * velAlongNormal; //1
-            impulseScalar /= BodyA.InvMass + BodyB.InvMass;
+            float impulseScalar = -(RestitutionMix) * velAlongNormal; 
+            impulseScalar /= (BodyA.InvMass + BodyB.InvMass); // times with mass
 
             // Apply impulse
-            var impulse = (impulseScalar * Normal);
+            Vector2 impulse = (impulseScalar * Normal);
 
             // Apply impulse from normal
-            //BodyA.ApplyForce(Forces.NORMAL, -impulse / delta);
             BodyA.ApplyImpulse(-impulse);
             BodyB.ApplyImpulse(impulse);
 
 
             //  ==== START FRICTION ==== //
-            diffVelocity = BodyB.Velocity - BodyA.Velocity; //(BodyB.GetVelocity() + (BodyB.InvMass * impulse)) - (BodyA.GetVelocity() - (BodyA.InvMass * impulse));
+
+            diffVelocity = BodyB.Velocity - BodyA.Velocity; 
 
             // Solve the tangent vector
             var tangent = diffVelocity - Vector2.Dot(diffVelocity, Normal) * Normal;
@@ -78,33 +80,32 @@ namespace FysikLib.Fixtures
 
             // Solve for magnitude to apply along the friction vector
             float frictionForce = -Vector2.Dot(diffVelocity, tangent);
-            frictionForce = frictionForce / (BodyA.InvMass + BodyB.InvMass); // times with mas to get force
+            frictionForce /= (BodyA.InvMass + BodyB.InvMass); // times with mas to get force
 
             // Check if its a static of kinetic friction
             Vector2 frictionImpulse;
             if (Math.Abs(frictionForce) < impulseScalar * StaticFriction) // if max friction is less than normal impulse * static friction
             {
                 // Static
-                //frictionAcceleration = (tangent * (BodyA.GetVelocity() / delta)); //jt * tangent;
-                frictionImpulse = frictionForce * tangent;
+                                                                    //frictionImpulse = frictionForce * tangent;
+                BodyA.SetVelocity(0, 0);
             }
             else
             {
                 // Kinetic
                 frictionImpulse = -impulseScalar * KineticFriction * tangent;
-            }
 
-            // Apply
-            BodyA.ApplyImpulse(-frictionImpulse);
-            BodyB.ApplyImpulse(frictionImpulse);
+                BodyA.ApplyImpulse(-frictionImpulse);
+                BodyB.ApplyImpulse(frictionImpulse);
+            }
         }
 
         public void PositionalCorrection()
         {
-            const float percent = 1f; // usually 20% to 80%
-            const float slop = 0.002f; // usually 0.01 to 0.1
+            const float percent = .9f; // usually 20% to 80%
+            const float slop = 0.05f; // usually 0.01 to 0.1
             var correction = (Math.Max(Penetration - slop, 0.0f) / (BodyA.InvMass + BodyB.InvMass)) * percent * Normal;
-            correction.X = 0; //TODO NASTY HACK
+            correction.X = 0;
             BodyA.Position -= BodyA.InvMass * correction;
             BodyB.Position += BodyB.InvMass * correction;
         }

@@ -43,14 +43,14 @@ namespace Fysik_Projekt
 
             world = new World(new Vector2(0, 9.8f), toPixels);
 
-            ball = new RigidBody(world, 1f, 1, 8) { Restitution = .5f };
+            ball = new RigidBody(world, 1f, 1, 8) { Restitution = .2f };
             Fixture fix = new FixtureCircle(0, 0, .5f);
             ball.AddFixture(fix);
             world.AddBody(ball);
 
 
             // line
-            StaticBody body = new StaticBody(world, 0, 9f) { Restitution = .1f};
+            StaticBody body = new StaticBody(world, 0, 9f) { Restitution = .4f};
             fix = new FixturePolygon(0, 0, new Segment(0, 0, graphics.PreferredBackBufferWidth / toPixels, 0));
             body.AddFixture(fix);
             world.AddBody(body);
