@@ -17,7 +17,7 @@ namespace C1_Car
         private Road road;
         private bool turn, madeTurn;
         private World world;
-        public Car(World world, float mass, float friction, Road road, int speed, Texture texture)
+        public Car(World world, float mass, float friction, Road road, int speed)
         {
             this.world = world;
             this.road = road;

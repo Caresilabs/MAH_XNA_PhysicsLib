@@ -20,7 +20,6 @@ namespace C1_Car
         Road road;
         Controller controller;
         List<Car> cars = new List<Car>();
-        Texture2D texture;
 
         public static int screenWidth = 1280, screenHeight = 720;
         public Game1()
@@ -43,7 +42,6 @@ namespace C1_Car
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            texture = Content.Load<Texture2D>(@"Img/car");
             world = new World(new Vector2(0, -10), 10);      
             road = new Road(world);
         }
@@ -55,7 +53,7 @@ namespace C1_Car
 
         public void SpawnCar()
         {
-            cars.Add(new Car(world, 2000, controller.GetFriction(), road, controller.GetSpeed(), texture));
+            cars.Add(new Car(world, 2000, controller.GetFriction(), road, controller.GetSpeed()));
         }
         public void RemoveCars()
         {
