@@ -42,7 +42,7 @@ namespace B2_Box
 
             world = new World(new Vector2(0, 9.8f), toPixels);
 
-            ball = new RigidBody(world, .2f, 2, 3) { Restitution = .1f, FrictionKinetic = .1f, FrictionStatic = .2f };
+            ball = new RigidBody(world, .2f, 1, 3) { Restitution = .5f, FrictionKinetic = .001f, FrictionStatic = .2f };
             Fixture fix = new FixtureCircle(0, 0, .45f);
             ball.AddFixture(fix);
             ball.SetVelocity(0, 5);
@@ -52,8 +52,8 @@ namespace B2_Box
             float height = graphics.PreferredBackBufferHeight / toPixels - 1;
 
             // line
-            StaticBody body = new StaticBody(world, 0, height + 1) { Restitution = .05f, FrictionKinetic = .15f, FrictionStatic = .3f };
-            fix = new FixturePolygon(1, -5, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -5);
+            StaticBody body = new StaticBody(world, 2, height + 1) { Restitution = .05f, FrictionKinetic = .001f, FrictionStatic = .3f };
+            fix = new FixturePolygon(-3,-4, 1, -4, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -6.5f);
             body.AddFixture(fix);
             world.AddBody(body);
         }
@@ -86,7 +86,7 @@ namespace B2_Box
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
-                ball.Position = new Vector2(2, 3);
+                ball.Position = new Vector2(1, 3);
                 ball.SetVelocity(0, 0);
             }
 
@@ -103,7 +103,7 @@ namespace B2_Box
 
 
         Vector2 dir = new Vector2();
-        float speed = 12;
+        float speed = 7;
 
         protected override void Draw(GameTime gameTime)
         {

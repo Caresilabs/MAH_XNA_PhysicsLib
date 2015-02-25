@@ -111,7 +111,7 @@ namespace FysikLib.Fixtures
             const float percent = .9f; // usually 20% to 80%
             const float slop = 0.05f; // usually 0.01 to 0.1
             var correction = (Math.Max(Penetration - slop, 0.0f) / (BodyA.InvMass + BodyB.InvMass)) * percent * Normal;
-            //correction.X = 0;
+            correction.X = 0;
             //correction.Y = 0;
             BodyA.Position -= BodyA.InvMass * correction;
             BodyB.Position += BodyB.InvMass * correction;
