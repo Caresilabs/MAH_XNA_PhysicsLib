@@ -11,9 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using C3.XNA;
-using A2_Boll;
 
-namespace Fysik_Projekt
+namespace B2_Box
 {
 
     public class Game1 : Microsoft.Xna.Framework.Game
@@ -22,7 +21,6 @@ namespace Fysik_Projekt
         SpriteBatch spriteBatch;
         private World world;
         private RigidBody ball;
-        Controller controller;
         int toPixels = 50;
 
         public Game1()
@@ -44,8 +42,8 @@ namespace Fysik_Projekt
 
             world = new World(new Vector2(0, 9.8f), toPixels);
 
-            ball = new RigidBody(world, .2f, 2, 3) { Restitution = .8f, FrictionKinetic = .1f, FrictionStatic = .2f };
-            Fixture fix = new FixtureCircle(0, 0, .7f);
+            ball = new RigidBody(world, .2f, 2, 3) { Restitution = .1f, FrictionKinetic = .1f, FrictionStatic = .2f };
+            Fixture fix = new FixtureCircle(0, 0, .45f);
             ball.AddFixture(fix);
             ball.SetVelocity(0, 5);
             world.AddBody(ball);
@@ -54,15 +52,10 @@ namespace Fysik_Projekt
             float height = graphics.PreferredBackBufferHeight / toPixels - 1;
 
             // line
-            StaticBody body = new StaticBody(world, 0, height + 1) { Restitution = .1f, FrictionKinetic = .15f, FrictionStatic = .3f };
-            //fix = new FixturePolygon(1, -5, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -5);
-            fix = new FixturePolygon(1, 0, width, 0, width, -height, 1, -height, 1, 0);
+            StaticBody body = new StaticBody(world, 0, height + 1) { Restitution = .05f, FrictionKinetic = .15f, FrictionStatic = .3f };
+            fix = new FixturePolygon(1, -5, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -5);
             body.AddFixture(fix);
             world.AddBody(body);
-
-
-            controller = new Controller();
-            controller.Show();
         }
 
 
@@ -89,7 +82,7 @@ namespace Fysik_Projekt
 
             if (KeyMouseReader.KeyPressed(Keys.Space))
                 ball.Velocity = speed * dir;
-               // ball.ApplyForce(Forces.CLICK, force * dir);
+            // ball.ApplyForce(Forces.CLICK, force * dir);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
@@ -106,14 +99,6 @@ namespace Fysik_Projekt
 
         private void UpdateInput()
         {
-            speed = (float)controller.BarSpeed.Value / 50f;
-            controller.labelNewton.Text = String.Format("Speed: {0} m/s", speed);
-
-            if (KeyMouseReader.KeyPressed(Keys.LeftControl))
-            {
-                ball.Position = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(Matrix.CreateScale(toPixels, toPixels, 1f)));
-                ball.SetVelocity(0, 0);
-            }
         }
 
 

@@ -37,7 +37,8 @@ namespace FysikLib.Fixtures
             KineticFriction = (float)Math.Sqrt((BodyA.FrictionKinetic * BodyA.FrictionKinetic) + (BodyB.FrictionKinetic * BodyB.FrictionKinetic));
 
             // Calculate restitution
-            RestitutionMix = Math.Min(BodyA.Restitution, BodyB.Restitution);
+            RestitutionMix = Math.Max(BodyA.Restitution, BodyB.Restitution);
+                //(float)Math.Sqrt((BodyA.Restitution * BodyA.Restitution) + (BodyB.Restitution * BodyB.Restitution)); //Math.Min(BodyA.Restitution, BodyB.Restitution);
         }
 
         public void ApplyImpulse()
@@ -55,7 +56,7 @@ namespace FysikLib.Fixtures
                 return;
 
             // Calculate impulse scalar 
-            float impulseScalar = -(RestitutionMix) * velAlongNormal; 
+            float impulseScalar = -( 1 + RestitutionMix) * velAlongNormal; 
             impulseScalar /= (BodyA.InvMass + BodyB.InvMass); // times with mass
 
             // Apply impulse
@@ -87,8 +88,13 @@ namespace FysikLib.Fixtures
             if (Math.Abs(frictionForce) < impulseScalar * StaticFriction) // if max friction is less than normal impulse * static friction
             {
                 // Static
-                BodyA.SetVelocity(0, 0);
-                BodyB.SetVelocity(0,0);
+               // BodyA.SetVelocity(0, 0);
+               // BodyB.SetVelocity(0,0);
+
+                frictionImpulse = -frictionForce * tangent * KineticFriction; //-impulseScalar * KineticFriction * tangent;
+
+                BodyA.ApplyImpulse(-frictionImpulse);
+                BodyB.ApplyImpulse(frictionImpulse);
             }
             else
             {

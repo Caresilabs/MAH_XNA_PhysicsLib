@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fysik ProjektContent", "Fys
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A1_Boll", "A1_Boll\Fysik Projekt\A1_Boll.csproj", "{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2_Box", "B2_Box\B2_Box\B2_Box.csproj", "{1CD9008C-3A0B-4BDD-997A-0496A14F67D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -43,6 +45,10 @@ Global
 		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Debug|x86.Build.0 = Debug|x86
 		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Release|x86.ActiveCfg = Release|x86
 		{82CDC713-C6C9-4165-8D3C-CAF777AF04FE}.Release|x86.Build.0 = Release|x86
+		{1CD9008C-3A0B-4BDD-997A-0496A14F67D7}.Debug|x86.ActiveCfg = Debug|x86
+		{1CD9008C-3A0B-4BDD-997A-0496A14F67D7}.Debug|x86.Build.0 = Debug|x86
+		{1CD9008C-3A0B-4BDD-997A-0496A14F67D7}.Release|x86.ActiveCfg = Release|x86
+		{1CD9008C-3A0B-4BDD-997A-0496A14F67D7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
