@@ -89,11 +89,12 @@ namespace FysikLib
                 float sumX = forces.Sum(x => x.Value.X) / (float)Mass;
                 float sumY = forces.Sum(x => x.Value.Y) / (float)Mass;
 
-               // Position += Velocity * delta + new Vector2(sumX, sumY) * delta * delta * .5f; //Velocity * delta; // fel lennart, RECT MAN!! * 1 / 2f; 
+                Vector2 pastVelocity = Velocity;
+                Velocity = pastVelocity + new Vector2(sumX, sumY) * delta;
+                Position = Position + 0.5f * (pastVelocity + Velocity) * delta;
 
-                Velocity += new Vector2(sumX, sumY) * delta;
-
-                Position += Velocity * delta;
+                //Velocity += new Vector2(sumX, sumY) * delta;
+                //Position += Velocity * delta;
 
             }
 
@@ -116,9 +117,6 @@ namespace FysikLib
                     }
                 }
             }
-
-            if (!IsStatic)
-            Console.WriteLine(Velocity);
 
             //foreach (var item in manifolds)
             //    item.Initialize();

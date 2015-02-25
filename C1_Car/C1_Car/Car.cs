@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using C3.XNA;
 
 namespace C1_Car
 {
@@ -17,6 +18,8 @@ namespace C1_Car
         private Road road;
         private bool turn, madeTurn;
         private World world;
+        float forceMagnitude;
+
         public Car(World world, float mass, float friction, Road road, int speed)
         {
             this.world = world;
@@ -24,6 +27,7 @@ namespace C1_Car
             this.friction = friction;
             this.mass = mass;
             this.speed = speed;
+            this.forceMagnitude = (float)(Math.Pow(speed, 2) / road.GetRadius());
 
             //Setup body and fixture for car
             body = new RigidBody(world, mass, road.GetStartPosition().X, road.GetStartPosition().Y);
@@ -49,7 +53,7 @@ namespace C1_Car
                 turn = true;
                 madeTurn = true;
             }
-            else if (body.Position.X < road.GetCentrum().X && body.Position.Y < road.GetLowerRoadPosition().Y + 1.5f)
+            else if (body.Position.X < road.GetCentrum().X)
             {
                 turn = false;
                 //Fix update, for roatating to much
@@ -65,20 +69,20 @@ namespace C1_Car
                 float speed = body.Velocity.Length();
                 float forceMagnitude = (float)(Math.Pow(speed, 2) / road.GetRadius());
 
-                if (Math.Abs(world.GetGravity().Y * friction) < forceMagnitude)
+                if (Math.Abs(world.GetGravity().Y * friction) < this.forceMagnitude)
                     forceMagnitude = Math.Abs(world.GetGravity().Y * friction) * 0.6f;
+                
+                Vector2 vectorTowardsCentrum = -new Vector2((float)Math.Cos(MathHelper.ToRadians(body.Rotation)), (float)Math.Sin(MathHelper.ToRadians(body.Rotation)));
+                vectorTowardsCentrum.Normalize();
 
-                Vector2 VectorTowardsCentrum = road.GetCentrum() - body.Position;
-                VectorTowardsCentrum.Normalize();
-
-                body.ApplyForce(Forces.FRICTION, VectorTowardsCentrum * forceMagnitude);
+                body.ApplyForce(Forces.FRICTION, vectorTowardsCentrum * forceMagnitude);
                 body.Rotation = (float)(-Math.Atan2(body.Velocity.X, body.Velocity.Y) * (180 / Math.PI));
             }
         }
 
         public void Draw(SpriteBatch batch)
         {
-            
+
         }
     }
 }
