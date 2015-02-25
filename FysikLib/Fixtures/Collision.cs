@@ -13,7 +13,7 @@ namespace FysikLib.Fixtures
             var range = (c1.Position - c2.Position).Length();
             if (range <= c1.Radius + c2.Radius)
             {
-                var normal = (c1.Position - c2.Position);
+                var normal = (c2.Position - c1.Position);
                 normal.Normalize();
                 return new Manifold[] { new Manifold() { A = c1, B = c2, Normal = normal, Penetration = (c1.Radius + c2.Radius) - range }}; // TODO
             }

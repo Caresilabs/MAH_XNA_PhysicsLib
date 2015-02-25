@@ -43,9 +43,21 @@ namespace FysikLib
 
         public void Update(float delta)
         {
-            foreach (var item in Bodies)
+            foreach (var body in Bodies)
             {
-                item.Update(delta);
+                body.Update(delta);
+
+                foreach (var item in body.manifolds)
+                    item.Initialize();
+
+                foreach (var item in body.manifolds)
+                    item.ApplyImpulse();
+
+
+                foreach (var item in body.manifolds)
+                    item.PositionalCorrection();
+
+                body.UpdateFixtures();
             }
 
             // Clear all forces

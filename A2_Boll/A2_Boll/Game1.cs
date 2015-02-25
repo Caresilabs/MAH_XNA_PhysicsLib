@@ -43,15 +43,16 @@ namespace Fysik_Projekt
 
             world = new World(new Vector2(0, 9.8f), toPixels);
 
-            ball = new RigidBody(world, 1f, 1, 8) { Restitution = .2f };
-            Fixture fix = new FixtureCircle(0, 0, .5f);
+            ball = new RigidBody(world, 1f, 1, 3) { Restitution = 1, FrictionKinetic=.1f, FrictionStatic = .2f };
+            Fixture fix = new FixtureCircle(0, 0, .2f);
             ball.AddFixture(fix);
+            ball.SetVelocity(0, 5);
             world.AddBody(ball);
 
 
             // line
-            StaticBody body = new StaticBody(world, 0, 9f) { Restitution = .4f};
-            fix = new FixturePolygon(0, 0, new Segment(0, 0, graphics.PreferredBackBufferWidth / toPixels, 0));
+            StaticBody body = new StaticBody(world, 0, 9f) { Restitution = 1, FrictionKinetic = .1f, FrictionStatic = .2f};
+            fix = new FixturePolygon(1, -5, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -5);
             body.AddFixture(fix);
             world.AddBody(body);
 
@@ -79,7 +80,7 @@ namespace Fysik_Projekt
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
             {
-                ball.Position = new Vector2(1, 8);
+                ball.Position = new Vector2(1, 3);
                 ball.SetVelocity(0, 0);
             }
             Random rnd = new Random();
@@ -87,7 +88,7 @@ namespace Fysik_Projekt
                 RigidBody b1 = new RigidBody(world, .4f, rnd.Next(1, 5), 5) { Restitution = .6f };
                 Fixture fix = new FixtureCircle(0, 0, .5f);
                 b1.AddFixture(fix);
-                world.AddBody(b1);
+               // world.AddBody(b1);
             }
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;

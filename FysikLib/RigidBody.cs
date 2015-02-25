@@ -32,7 +32,7 @@ namespace FysikLib
 
         public float InvMass { get; private set; }
 
-        public float Restitution  { get; set; }
+        public float Restitution { get; set; }
 
         public Vector2 Position { get; set; }
 
@@ -56,6 +56,8 @@ namespace FysikLib
                 _rotation = value;
             }
         }
+
+        public List<Manifold> manifolds = new List<Manifold>();
 
         public RigidBody(World world, float mass, float x = 0, float y = 0)
         {
@@ -87,13 +89,16 @@ namespace FysikLib
                 float sumX = forces.Sum(x => x.Value.X) / (float)Mass;
                 float sumY = forces.Sum(x => x.Value.Y) / (float)Mass;
 
+               // Position += Velocity * delta + new Vector2(sumX, sumY) * delta * delta * .5f; //Velocity * delta; // fel lennart, RECT MAN!! * 1 / 2f; 
+
                 Velocity += new Vector2(sumX, sumY) * delta;
 
-                Position += Velocity * delta; // fel lennart, RECT MAN!! * 1 / 2f; 
+                Position += Velocity * delta;
+
             }
 
             // Update Collision
-            List<Manifold> manifolds = new List<Manifold>();
+            manifolds.Clear();
             if (UseCollision)
             {
                 foreach (var fix1 in Fixtures)
@@ -112,17 +117,25 @@ namespace FysikLib
                 }
             }
 
-            foreach (var item in manifolds)
-                item.Initialize();
+            if (!IsStatic)
+            Console.WriteLine(Velocity);
 
-            foreach (var item in manifolds)
-                item.ApplyImpulse();
+            //foreach (var item in manifolds)
+            //    item.Initialize();
+
+            //foreach (var item in manifolds)
+            //    item.ApplyImpulse();
 
 
-            foreach (var item in manifolds)
-                item.PositionalCorrection();
+            //foreach (var item in manifolds)
+            //    item.PositionalCorrection();
 
             // update fixtures position
+
+        }
+
+        public void UpdateFixtures()
+        {
             foreach (var fixture in Fixtures)
                 fixture.Update(Position);
         }
@@ -152,11 +165,11 @@ namespace FysikLib
         public void ApplyForce(Forces type, Vector2 acceleration)
         {
             if (forces.ContainsKey(type))
-                forces[type] += acceleration * Mass; 
+                forces[type] += acceleration * Mass;
             else
                 forces.Add(type, acceleration * Mass);
 
-          //  Velocity += acceleration * 1/60f;
+            //  Velocity += acceleration * 1/60f;
         }
 
         public void ApplyImpulse(Vector2 impulse)

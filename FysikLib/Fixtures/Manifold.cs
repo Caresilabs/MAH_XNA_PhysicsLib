@@ -75,7 +75,7 @@ namespace FysikLib.Fixtures
             tangent.Normalize();
 
             // Tangent cannot be NaN
-            if (tangent.X.Equals(float.NaN))
+            if (float.IsInfinity(tangent.X) || float.IsInfinity(tangent.Y) || float.IsNaN(tangent.X) || float.IsNaN(tangent.Y))
                 tangent = new Vector2(-1, 0);
 
             // Solve for magnitude to apply along the friction vector
@@ -87,8 +87,8 @@ namespace FysikLib.Fixtures
             if (Math.Abs(frictionForce) < impulseScalar * StaticFriction) // if max friction is less than normal impulse * static friction
             {
                 // Static
-                                                                    //frictionImpulse = frictionForce * tangent;
                 BodyA.SetVelocity(0, 0);
+                BodyB.SetVelocity(0,0);
             }
             else
             {
@@ -105,7 +105,8 @@ namespace FysikLib.Fixtures
             const float percent = .9f; // usually 20% to 80%
             const float slop = 0.05f; // usually 0.01 to 0.1
             var correction = (Math.Max(Penetration - slop, 0.0f) / (BodyA.InvMass + BodyB.InvMass)) * percent * Normal;
-            correction.X = 0;
+            //correction.X = 0;
+            //correction.Y = 0;
             BodyA.Position -= BodyA.InvMass * correction;
             BodyB.Position += BodyB.InvMass * correction;
         }
