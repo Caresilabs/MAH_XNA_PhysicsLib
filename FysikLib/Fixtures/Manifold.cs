@@ -37,7 +37,7 @@ namespace FysikLib.Fixtures
             KineticFriction = (float)Math.Sqrt((BodyA.FrictionKinetic * BodyA.FrictionKinetic) + (BodyB.FrictionKinetic * BodyB.FrictionKinetic));
 
             // Calculate restitution
-            RestitutionMix = Math.Max(BodyA.Restitution, BodyB.Restitution);
+            RestitutionMix = .5f * (BodyA.Restitution + BodyB.Restitution);
                 //(float)Math.Sqrt((BodyA.Restitution * BodyA.Restitution) + (BodyB.Restitution * BodyB.Restitution)); //Math.Min(BodyA.Restitution, BodyB.Restitution);
         }
 

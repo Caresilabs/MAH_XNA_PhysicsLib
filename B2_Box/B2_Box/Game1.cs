@@ -22,6 +22,7 @@ namespace B2_Box
         private World world;
         private RigidBody ball;
         int toPixels = 50;
+        Controller controller;
 
         public Game1()
         {
@@ -42,7 +43,7 @@ namespace B2_Box
 
             world = new World(new Vector2(0, 9.8f), toPixels);
 
-            ball = new RigidBody(world, .2f, 1, 3) { Restitution = .5f, FrictionKinetic = .001f, FrictionStatic = .2f };
+            ball = new RigidBody(world, .2f, 1, 3) { Restitution = .5f, FrictionKinetic = .001f, FrictionStatic = .1f };
             Fixture fix = new FixtureCircle(0, 0, .45f);
             ball.AddFixture(fix);
             ball.SetVelocity(0, 5);
@@ -52,10 +53,13 @@ namespace B2_Box
             float height = graphics.PreferredBackBufferHeight / toPixels - 1;
 
             // line
-            StaticBody body = new StaticBody(world, 2, height + 1) { Restitution = .05f, FrictionKinetic = .001f, FrictionStatic = .3f };
+            StaticBody body = new StaticBody(world, 2, height + 1) { Restitution = .05f, FrictionKinetic = .001f, FrictionStatic = .2f };
             fix = new FixturePolygon(-3,-4, 1, -4, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -6.5f);
             body.AddFixture(fix);
             world.AddBody(body);
+
+            controller = new Controller();
+            controller.Show();
         }
 
 
@@ -99,6 +103,14 @@ namespace B2_Box
 
         private void UpdateInput()
         {
+            speed = (float)controller.BarSpeed.Value / 50f;
+            controller.labelNewton.Text = String.Format("Speed: {0} m/s", speed);
+
+            if (KeyMouseReader.KeyPressed(Keys.LeftControl))
+            {
+                ball.Position = Vector2.Transform(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), Matrix.Invert(Matrix.CreateScale(toPixels, toPixels, 1f)));
+                ball.SetVelocity(0, 0);
+            }
         }
 
 

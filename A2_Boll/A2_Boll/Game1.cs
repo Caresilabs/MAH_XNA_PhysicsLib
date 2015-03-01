@@ -56,10 +56,15 @@ namespace Fysik_Projekt
             // line
             StaticBody body = new StaticBody(world, 0, height + 1) { Restitution = .1f, FrictionKinetic = .15f, FrictionStatic = .3f };
             //fix = new FixturePolygon(1, -5, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -5);
-            fix = new FixturePolygon(1, 0, width, 0, width, -height, 1, -height, 1, 0);
+            fix = new FixturePolygon(width, 0, width, -height, 1, -height, 1, 0);
+            
             body.AddFixture(fix);
             world.AddBody(body);
 
+            var floorbody = new StaticBody(world, 0, height + 1) { Restitution = .6f};
+            FixturePolygon floor = new FixturePolygon(1.1f, 0, width -.1f, 0);
+            floorbody.AddFixture(floor);
+            world.AddBody(floorbody);
 
             controller = new Controller();
             controller.Show();
