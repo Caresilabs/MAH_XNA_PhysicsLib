@@ -50,13 +50,14 @@ namespace C1_Car
         {
             if (body.Position.X > road.GetCentrum().X)
             {
+                //Start turn
                 turn = true;
                 madeTurn = true;
             }
             else if (body.Position.X < road.GetCentrum().X)
             {
+                //End Turn
                 turn = false;
-                //Fix update, for roatating to much
                 if(madeTurn)
                 {
                     body.Rotation = 270;
@@ -66,16 +67,20 @@ namespace C1_Car
 
             if (turn)
             {
+                //While turn
                 float speed = body.Velocity.Length();
                 float forceMagnitude = (float)(Math.Pow(speed, 2) / road.GetRadius());
 
+                //If the force needed is more then the friction can handle, then make the car slide out (kinetik = 60% of Static friction)
                 if (Math.Abs(world.GetGravity().Y * friction) < this.forceMagnitude)
                     forceMagnitude = Math.Abs(world.GetGravity().Y * friction) * 0.6f;
-                
-                Vector2 vectorTowardsCentrum = -new Vector2((float)Math.Cos(MathHelper.ToRadians(body.Rotation)), (float)Math.Sin(MathHelper.ToRadians(body.Rotation)));
-                vectorTowardsCentrum.Normalize();
 
-                body.ApplyForce(Forces.FRICTION, vectorTowardsCentrum * forceMagnitude);
+                //A vector pointing 90 Degress to the cars direction
+                Vector2 vectorPerpendicularToCar = -new Vector2((float)Math.Cos(MathHelper.ToRadians(body.Rotation)), (float)Math.Sin(MathHelper.ToRadians(body.Rotation)));
+                vectorPerpendicularToCar.Normalize();
+
+                //Applay force to car and roatate car model
+                body.ApplyForce(Forces.FRICTION, vectorPerpendicularToCar * forceMagnitude);
                 body.Rotation = (float)(-Math.Atan2(body.Velocity.X, body.Velocity.Y) * (180 / Math.PI));
             }
         }
