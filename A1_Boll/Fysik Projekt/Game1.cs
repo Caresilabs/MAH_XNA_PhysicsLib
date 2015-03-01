@@ -131,7 +131,7 @@ namespace Fysik_Projekt
                  null,
                  Matrix.CreateScale(toPixels, toPixels, 1f));
 
-            if (Math.Abs(ball.GetVelocity().Length()) < 2f)
+            if (Math.Abs(ball.Velocity.Length()) < 2f)
                 spriteBatch.DrawLine(ball.Position, ball.Position + (dir * force / 100f), Color.Red, .05f);
 
             spriteBatch.End();
