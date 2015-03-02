@@ -44,7 +44,7 @@ namespace Fysik_Projekt
 
             world = new World(new Vector2(0, 9.8f), toPixels);
 
-            ball = new RigidBody(world, .2f, 2, 3) { Restitution = .8f, FrictionKinetic = .0f, FrictionStatic = .2f };
+            ball = new RigidBody(world, .2f, 2, 3) { Restitution = .8f, FrictionKinetic = .5f, FrictionStatic = 1f };
             Fixture fix = new FixtureCircle(0, 0, .5f);
             ball.AddFixture(fix);
             ball.SetVelocity(0, 5);
@@ -61,7 +61,7 @@ namespace Fysik_Projekt
             body.AddFixture(fix);
             world.AddBody(body);
 
-            var floorbody = new StaticBody(world, 0, height + 1) { Restitution = .4f, FrictionKinetic = 0f};
+            var floorbody = new StaticBody(world, 0, height + 1) { Restitution = .4f, FrictionKinetic = .2f};
             FixturePolygon floor = new FixturePolygon(1.1f, 0, width -.1f, 0);
             floorbody.AddFixture(floor);
             world.AddBody(floorbody);
@@ -93,7 +93,7 @@ namespace Fysik_Projekt
             dir.Normalize();
 
             if (KeyMouseReader.KeyPressed(Keys.Space))
-                ball.Velocity = speed * dir;
+                ball.ApplyImpulse(speed * dir * ball.Mass, new Vector2(0,0f));//ball.Velocity = speed * dir;
                // ball.ApplyForce(Forces.CLICK, force * dir);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))

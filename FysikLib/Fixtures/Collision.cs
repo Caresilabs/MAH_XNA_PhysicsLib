@@ -32,9 +32,9 @@ namespace FysikLib.Fixtures
                     Vector2 b = line.end - line.start;
                     Vector2 ab = circle.Position - (pol.Position + line.start);
                     Vector2 a2 = ab - ((Vector2.Dot(ab, b) / Vector2.Dot(b, b)) * b);
-                    a2.Normalize();
+                    a2.Normalize(); 
 
-                    list.Add( new Manifold() { A = circle, B = pol, Normal = -a2, Penetration = (circle.Radius - dst) });
+                    list.Add( new Manifold() { A = circle, B = pol, Normal = -a2, Penetration = (circle.Radius - dst), Contact = circle.Body.Position - a2 * (circle.Radius)});
                 }
             }
 

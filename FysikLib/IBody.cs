@@ -16,7 +16,7 @@ namespace FysikLib
 
         void SetVelocity(float x, float y);
 
-        void ApplyImpulse(Vector2 impulse);
+        void ApplyImpulse(Vector2 impulse, Vector2 contact);
 
         float GetSpeed();
     }

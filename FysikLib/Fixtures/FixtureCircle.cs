@@ -38,6 +38,7 @@ namespace FysikLib.Fixtures
         public override void Draw(SpriteBatch batch)
         {
             batch.DrawCircle(Position, Radius, 32, Color.Red, Radius);
+            batch.DrawLine(Position, Radius, MathHelper.ToRadians(Body.Rotation), Color.Blue, .08f);
         }
 
         public override void OnRotate(float angle)

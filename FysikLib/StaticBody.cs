@@ -9,6 +9,7 @@ namespace FysikLib
     {
         public StaticBody(World world, float x = 0, float y = 0) : base(world, 0, x, y)
         {
+            Inertia = 0;
             IsStatic = true;
         }
     }

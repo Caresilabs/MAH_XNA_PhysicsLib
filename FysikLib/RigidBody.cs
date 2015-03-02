@@ -36,7 +36,18 @@ namespace FysikLib
 
         public Vector2 Position { get; set; }
 
+        // rotation
+
         public Vector2 Velocity { get; set; }
+
+        public float AngularVelocity { get; set; }
+
+        public float Torque { get; set; }
+
+        private float _inertia;
+        public float Inertia { get { return _inertia; } set { _inertia = value; InvInertia = value == 0 ? 0 : 1 / value; } }
+
+        public float InvInertia { get; private set; }
 
 
         private readonly Dictionary<Forces, Vector2> forces;
@@ -70,10 +81,13 @@ namespace FysikLib
             this.World = world;
             this.UseGravity = true;
             this.IsStatic = false;
-            this.Restitution = 1.5f;
             this.UseCollision = true;
-            this.FrictionKinetic = .35f;
-            this.FrictionStatic = .45f;
+
+            this.Restitution = 1f;
+            this.FrictionKinetic = .25f;
+            this.FrictionStatic = .35f;
+            this.Torque = 0;
+            this.Inertia = .2f;
         }
 
         // Loop
@@ -93,6 +107,8 @@ namespace FysikLib
                 Velocity = pastVelocity + new Vector2(sumX, sumY) * delta;
                 Position = Position + 0.5f * (pastVelocity + Velocity) * delta;
 
+                AngularVelocity += Torque * InvInertia * (delta / 2.0f);
+                Rotation += MathHelper.ToDegrees(AngularVelocity * delta);
                 //Velocity += new Vector2(sumX, sumY) * delta;
                 //Position += Velocity * delta;
 
@@ -170,9 +186,15 @@ namespace FysikLib
             //  Velocity += acceleration * 1/60f;
         }
 
-        public void ApplyImpulse(Vector2 impulse)
+        public void ApplyImpulse(Vector2 impulse, Vector2 contact)
         {
             Velocity += InvMass * impulse;
+            AngularVelocity += ((InvInertia) * CrossProduct(contact, impulse));
+        }
+
+        private float CrossProduct(Vector2 a, Vector2 b )
+        {
+            return a.X * b.Y - a.Y * b.X;
         }
 
         public Vector2 GetForce(Forces type)
