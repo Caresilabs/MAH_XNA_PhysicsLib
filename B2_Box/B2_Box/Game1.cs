@@ -54,7 +54,7 @@ namespace B2_Box
 
             // line
             StaticBody body = new StaticBody(world, 2, height + 1) { Restitution = .05f, FrictionKinetic = .001f, FrictionStatic = .2f };
-            fix = new FixturePolygon(-3,-4, 1, -4, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -6.5f);
+            fix = new FixturePolygon(-3,-3.9f, 1, -3.9f, 6, -2.0f,  6.125f, -1.95f,  6.25f, -1.9f,   6.5f, -1.85f,   6.75f, -1.9f,    7, -2, 11, -6.5f);
             body.AddFixture(fix);
             world.AddBody(body);
 
