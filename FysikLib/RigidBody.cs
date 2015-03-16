@@ -87,7 +87,7 @@ namespace FysikLib
             this.FrictionKinetic = .25f;
             this.FrictionStatic = .35f;
             this.Torque = 0;
-            this.Inertia = .2f;
+            this.Inertia = .5f * .5f * mass;
         }
 
         // Loop
