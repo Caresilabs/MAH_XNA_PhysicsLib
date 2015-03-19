@@ -88,6 +88,7 @@ namespace FysikLib
             this.FrictionStatic = .35f;
             this.Torque = 0;
             this.Inertia = .5f * .5f * mass;
+            Inertia = 0;
         }
 
         // Loop
@@ -103,12 +104,18 @@ namespace FysikLib
                 float sumX = forces.Sum(x => x.Value.X) / (float)Mass;
                 float sumY = forces.Sum(x => x.Value.Y) / (float)Mass;
 
+                // Numeric method for velcoity and position
                 Vector2 pastVelocity = Velocity;
                 Velocity = pastVelocity + new Vector2(sumX, sumY) * delta;
                 Position = Position + 0.5f * (pastVelocity + Velocity) * delta;
 
+
+                // Angular velocity
                 AngularVelocity += Torque * InvInertia * (delta / 2.0f);
                 Rotation += MathHelper.ToDegrees(AngularVelocity * delta);
+             
+                
+                
                 //Velocity += new Vector2(sumX, sumY) * delta;
                 //Position += Velocity * delta;
 
